@@ -1,10 +1,14 @@
 import React from 'react';
 import RouterNav from './router';
-//import LoginScreen from './auth/Login';
-//import SignUpScreen from './auth/SignUp';
+import { Provider } from 'react-redux';
+import store from './store';
 
 function App() {
-  return <RouterNav />;
+  return (
+    <Provider store={store}>
+      <RouterNav />;
+    </Provider>
+  );
 }
 
 export default App;

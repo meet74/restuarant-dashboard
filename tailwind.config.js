@@ -6,11 +6,12 @@ module.exports = {
     colors: {
       background: '#F9F1EE',
       primary: '#1A763B',
-      secondary: '#8BC43F',
+      secondary: '#1D1D1D',
       lightGray: '#D3D3D3',
       gray: '#808080',
       white: '#ffffff',
       black: '#000000',
+      red: '#FF0000',
     },
     fontFamily: {
       display: ['Noto Sans', 'sans-serif'],
