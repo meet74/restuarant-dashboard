@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../../components/Header/index.js';
 import ProductCard from '../../../components/ProductCard/index.js';
@@ -26,10 +26,14 @@ const ProductScreen = () => {
 
   const usenavigate = useNavigate();
 
+  const [categories, setCategories] = useState('All Courses');
+
   useEffect(() => {
     dispatch(getProduct(restaurantData.restaurant, authData.token));
   }, [restaurantData]);
-
+  const handleCategories = (category) => {
+    setCategories(category);
+  };
   return (
     <div className="h-screen flex overflow-scroll bg-backgroundSecondary">
       <SideBar />
@@ -55,9 +59,36 @@ const ProductScreen = () => {
         {restaurantData.allRestaurants.length ? (
           <div className="flex flex-col  flex-1 ">
             <div className="flex justify-between ">
-              <span className=" font-display font-extrabold text-2xl">
-                Main Courses
-              </span>
+              <div className="flex justify-around items-center">
+                <span
+                  onClick={() => handleCategories('All Courses')}
+                  className={`font-display  rounded-2xl cursor-pointer flex items-center justify-center p-5 h-5 mx-4 font-extrabold text-lg ${
+                    categories === 'All Courses' && 'bg-primary text-white'
+                  }`}>
+                  All Courses
+                </span>
+                <span
+                  onClick={() => handleCategories('Starters')}
+                  className={`font-display  rounded-2xl cursor-pointer flex items-center justify-center p-5 h-5 mx-4 font-extrabold text-lg ${
+                    categories === 'Starters' && 'bg-primary text-white'
+                  }`}>
+                  Starters
+                </span>
+                <span
+                  onClick={() => handleCategories('Bread')}
+                  className={`font-display  rounded-2xl cursor-pointer flex items-center justify-center p-5 h-5 mx-4 font-extrabold text-lg ${
+                    categories === 'Bread' && 'bg-primary text-white'
+                  }`}>
+                  Bread
+                </span>
+                <span
+                  onClick={() => handleCategories('Desserts')}
+                  className={`font-display  rounded-2xl cursor-pointer flex items-center justify-center p-5 h-5 mx-4 font-extrabold text-lg ${
+                    categories === 'Desserts' && 'bg-primary text-white'
+                  }`}>
+                  Desserts
+                </span>
+              </div>
               <IconButton
                 icon={<MdRestaurantMenu className="mr-4" />}
                 titleText="Add Product"
