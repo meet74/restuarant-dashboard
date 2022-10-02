@@ -1,4 +1,4 @@
-import { FORGOTPASSWORD, LOGIN, SIGNUP } from '../constant';
+import { FORGOTPASSWORD, LOGIN, LOGOUT, SIGNUP } from '../constant';
 
 export const signupUser = (email = null, password = null) => {
   if (email != null && password != null) {
@@ -13,7 +13,6 @@ export const signupUser = (email = null, password = null) => {
 };
 
 export const loginUser = (email = null, password = null) => {
-  console.log(email, password);
   if (email != null && password != null) {
     return {
       type: LOGIN,
@@ -26,7 +25,6 @@ export const loginUser = (email = null, password = null) => {
 };
 
 export const forgotPassword = (email = null) => {
-  console.log(email);
   if (email != null) {
     return {
       type: FORGOTPASSWORD,
@@ -35,4 +33,11 @@ export const forgotPassword = (email = null) => {
   } else {
     return null;
   }
+};
+
+export const logOut = () => {
+  localStorage.setItem('token', null);
+  return {
+    type: LOGOUT,
+  };
 };

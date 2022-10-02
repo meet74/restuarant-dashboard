@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
+  dashboardScreenPath,
   forgotPasswordPath,
-  homeScreenPath,
   loginPath,
   signupPath,
 } from '../../router/pathNames';
@@ -22,12 +22,13 @@ const LoginScreen = () => {
   const [loader, setLoader] = useState(false);
 
   const data = useSelector((state) => state.auth);
-  console.log('seltect', data);
+  // const profileData = useSelector((state) => state.profile);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data.status === 200 && data.id) {
-      navigate(homeScreenPath, { replace: true });
+    if (data.status === 200 && data.token) {
+      navigate(dashboardScreenPath, { replace: true });
     } else {
       console.log('Error');
       setError(data.status);

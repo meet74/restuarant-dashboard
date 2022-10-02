@@ -1,15 +1,13 @@
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery, put } from 'redux-saga/effects';
 
 import {
-  API_URL,
   FORGOTPASSWORD,
   LOGIN,
   SET_LOGIN_DATA,
   SIGNUP,
+  SET_SIGNUP_DATA,
+  AUTH_API_URL,
 } from '../../constant';
-
-import { put } from 'redux-saga/effects';
-import { SET_SIGNUP_DATA } from '../../constant';
 
 function* signupRequest(action) {
   const params = {
@@ -18,8 +16,7 @@ function* signupRequest(action) {
     phone_no: 12345678,
   };
 
-  console.log('params', params);
-  const response = yield fetch(`${API_URL}/auth/signup`, {
+  const response = yield fetch(`${AUTH_API_URL}/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json;charset=UTF-8',
@@ -36,6 +33,7 @@ function* signupRequest(action) {
       id: res.user.id,
       phone_no: res.user.phone_no,
       status: response.status,
+      token: response.token,
     });
   } else {
     yield put({
@@ -44,6 +42,7 @@ function* signupRequest(action) {
       id: null,
       phone_no: null,
       status: response.status,
+      token: null,
     });
   }
 }
@@ -54,8 +53,7 @@ function* loginRequest(action) {
     password: action.password,
   };
 
-  console.log('params', params);
-  const response = yield fetch(`${API_URL}/auth/signin`, {
+  const response = yield fetch(`http://192.168.29.64:4000/api/auth/signin`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
@@ -72,6 +70,7 @@ function* loginRequest(action) {
       id: res.user.id,
       phone_no: res.user.phone_no,
       status: response.status,
+      token: res.token,
     });
   } else {
     yield put({
@@ -80,6 +79,7 @@ function* loginRequest(action) {
       id: null,
       phone_no: null,
       status: response.status,
+      token: null,
     });
   }
 }
@@ -89,8 +89,7 @@ function* forgotPasswordRequest(action) {
     email: action.email,
   };
 
-  console.log('params', params);
-  const response = yield fetch(`${API_URL}/auth/forgotpassword`, {
+  const response = yield fetch(`${AUTH_API_URL}/auth/forgotpassword`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
@@ -118,7 +117,6 @@ function* forgotPasswordRequest(action) {
 }
 
 function* AuthSaga() {
-  console.log('Shreehari');
   yield takeEvery(SIGNUP, signupRequest);
   yield takeEvery(LOGIN, loginRequest);
   yield takeEvery(FORGOTPASSWORD, forgotPasswordRequest);

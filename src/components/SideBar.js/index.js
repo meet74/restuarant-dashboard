@@ -6,22 +6,32 @@ import {
   MenuItem,
   SidebarHeader,
   SidebarContent,
+  SidebarFooter,
 } from 'react-pro-sidebar';
 import { FaTachometerAlt, FaList } from 'react-icons/fa';
-import { BiStats } from 'react-icons/bi';
+import { BiStats, BiRestaurant } from 'react-icons/bi';
 import { MdRestaurantMenu } from 'react-icons/md';
+import { BsPower } from 'react-icons/bs';
 import { RiAccountCircleFill } from 'react-icons/ri';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { useNavigate } from 'react-router-dom';
 import {
   dashboardScreenPath,
+  loginPath,
   productScreenPath,
   profileSCreenPath,
+  restaurantsScreenPath,
   statisticsScreenPath,
 } from '../../router/pathNames';
+import './custom.scss';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../store/actions/authActions';
+
+// const foodImage = require('../../assets/images/food-1.jpg');
 
 function SideBar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [toggled, setToggled] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -30,16 +40,19 @@ function SideBar() {
     setToggled(value);
   };
 
-  console.log(collapsed);
+  const logOutHandler = () => {
+    dispatch(logOut());
+    navigate(loginPath);
+  };
 
   return (
     <div
-      className={`w-[${
-        collapsed ? '10%' : '20%'
-      }] mr-4 transition-all duration-300	`}>
+      className={`${
+        collapsed ? 'w-[5%]' : 'w-[20%]'
+      } mr-4 transition-all duration-300 bg-backgroundSecondary	`}>
       <ProSidebar
         style={{ position: 'fixed' }}
-        image={false}
+        color="green"
         collapsed={collapsed}
         toggled={toggled}
         onToggle={handleToggleSidebar}>
@@ -64,7 +77,6 @@ function SideBar() {
             <FaList
               style={{ margin: '4px', cursor: 'pointer' }}
               onClick={() => {
-                console.log('shreehari');
                 setCollapsed(!collapsed);
               }}
             />
@@ -76,35 +88,53 @@ function SideBar() {
             <MenuItem
               onClick={() => navigate(dashboardScreenPath)}
               style={{ margin: '5px' }}
-              icon={<FaTachometerAlt />}>
-              Dashboard
+              icon={<FaTachometerAlt size={'22px'} />}>
+              <span className="text-base">Dashboard</span>
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => navigate(restaurantsScreenPath)}
+              style={{ margin: '5px', marginTop: '25px' }}
+              icon={<BiRestaurant size={'22px'} />}>
+              {' '}
+              <span className="text-base">Restaurants</span>
             </MenuItem>
 
             <MenuItem
               onClick={() => navigate(productScreenPath)}
               style={{ margin: '5px', marginTop: '25px' }}
-              icon={<MdRestaurantMenu />}>
+              icon={<MdRestaurantMenu size={'22px'} />}>
               {' '}
-              Products
+              <span className="text-base">Products</span>
             </MenuItem>
 
             <MenuItem
               onClick={() => navigate(statisticsScreenPath)}
               style={{ margin: '5px', marginTop: '25px' }}
-              icon={<BiStats />}>
+              icon={<BiStats size={'22px'} />}>
               {' '}
-              Statistics
+              <span className="text-base">Statistics</span>
             </MenuItem>
 
             <MenuItem
               onClick={() => navigate(profileSCreenPath)}
               style={{ margin: '5px', marginTop: '25px' }}
-              icon={<RiAccountCircleFill />}>
+              icon={<RiAccountCircleFill size={'22px'} />}>
               {' '}
-              Profile
+              <span className="text-base">Profile</span>
             </MenuItem>
           </Menu>
         </SidebarContent>
+        <SidebarFooter style={{ textAlign: 'center' }}>
+          <div
+            onClick={logOutHandler}
+            className="whitespace-nowrap text-ellipsis overflow-hidden flex items-center justify-center p-5 cursor-pointer">
+            {!collapsed && (
+              <span className="mr-4 font-display font-medium">Log Out</span>
+            )}
+            <BsPower />
+          </div>
+        </SidebarFooter>
       </ProSidebar>
     </div>
   );

@@ -10,9 +10,11 @@ function Input({
   height = '',
   value,
   required = false,
+  name = '',
 }) {
   return (
     <input
+      name={name}
       required={required}
       type={type}
       value={value}

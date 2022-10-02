@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { homeScreenPath, loginPath, signupPath } from '../../router/pathNames';
+import { loginPath, signupPath } from '../../router/pathNames';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupUser } from '../../store/actions/authActions';
 import Switch from '../../components/Switch';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import { setProfileData } from '../../store/actions/profileActions';
 
 const logo = require('../../assets/images/logo.png');
 const mainImage = require('../../assets/images/bg-restaurant-5.png');
@@ -18,16 +19,25 @@ const SignUpScreen = () => {
   const navigate = useNavigate();
 
   const data = useSelector((state) => state.auth);
-  console.log('seltect', data);
+  const profileData = useSelector((state) => state.profile);
 
   useEffect(() => {
-    if (data.status === 200 && data.id) {
-      navigate(homeScreenPath, { replace: true });
+    if (data.status === 200 && !data.token) {
+      dispatch(setProfileData(data.id));
     } else {
       console.log('Error');
       setError(data.status);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (profileData.status === 200 && profileData.id && !data.token) {
+      navigate(loginPath, { replace: true });
+    } else {
+      console.log('profile Error');
+      setError(data.status);
+    }
+  }, [profileData]);
 
   const dispatch = useDispatch();
 

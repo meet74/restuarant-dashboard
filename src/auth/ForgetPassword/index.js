@@ -20,7 +20,6 @@ const ForgotPassword = () => {
   const [loader, setLoader] = useState(false);
 
   const authData = useSelector((state) => state.auth);
-  console.log('seltect', authData);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +42,6 @@ const ForgotPassword = () => {
     console.log('status', authData.status);
   };
 
-  console.log(error);
   return (
     <div className="flex flex-1 flex-col h-screen ">
       <header className="flex  flex-row justify-between items-center flex-wrap">

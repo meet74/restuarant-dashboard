@@ -1,0 +1,17 @@
+.dropdown-menu {
+  background-color: transparent;
+  width: 50%;
+  height: 50px;
+  border-radius: 5px;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-arrow {
+  margin-top: 5px;
+}
+
+.dropdown-menu-class {
+  width: 50%;
+}
